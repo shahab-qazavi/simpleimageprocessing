@@ -7,6 +7,7 @@ import imquality.brisque as br
 import shutil
 import requests
 
+
 _url = 'https://media.wired.com/photos/5e59a85635982c0009f6eb8a/master/w_2560%2Cc_limit/python-popularity.jpg'
 
 
