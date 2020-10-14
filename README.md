@@ -14,6 +14,7 @@ This script get url of an image and download it and then returns the below infor
 6- True: if image has border, False: if image has not border.
 
 
+
 Requirements Libraries:
 
 pillow, opencv-python, numpy, scikit-learn, requests, image-quality, shutil, os
