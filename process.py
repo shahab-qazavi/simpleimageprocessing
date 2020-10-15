@@ -22,6 +22,7 @@ _url = 'https://media.wired.com/photos/5e59a85635982c0009f6eb8a/master/w_2560%2C
 #
 #
 # file_name = get_file_name(_url)
+
 file = requests.get(url=_url, stream=True)
 file_name = BytesIO(file.content)
 cv2_file = urlopen(_url)
