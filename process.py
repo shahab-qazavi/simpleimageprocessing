@@ -74,6 +74,7 @@ quality = br.score(img)
 # volume = len(img.fp.read())
 volume = meta.get(name="Content-Length")
 check_border = check_image_has_border(img)
+
 print({
     'Colors': visualize,
     'Format': _format,
