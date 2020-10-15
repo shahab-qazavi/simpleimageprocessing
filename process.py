@@ -4,28 +4,34 @@ import numpy as np
 from sklearn.cluster import KMeans
 from PIL import Image, ImageChops
 import imquality.brisque as br
-import shutil
 import requests
-
+from urllib.request import urlopen
+from io import BytesIO
 
 _url = 'https://media.wired.com/photos/5e59a85635982c0009f6eb8a/master/w_2560%2Cc_limit/python-popularity.jpg'
 
 
-def get_file_name(url):
-    name = ''
-    for item in url[::-1]:
-        if item != '/':
-            name += item
-        else:
-            break
-    return name[::-1]
-
-
-file_name = get_file_name(_url)
+# def get_file_name(url):
+#     name = ''
+#     for item in url[::-1]:
+#         if item != '/':
+#             name += item
+#         else:
+#             break
+#     return name[::-1]
+#
+#
+# file_name = get_file_name(_url)
 file = requests.get(url=_url, stream=True)
-if file.status_code == 200:
-    with open(file_name, 'wb') as out_file:
-        shutil.copyfileobj(file.raw, out_file)
+file_name = BytesIO(file.content)
+cv2_file = urlopen(_url)
+cv_img = np.asarray(bytearray(cv2_file.read()),dtype="uint8")
+meta = cv2_file.info()
+
+# img = cv2.imdecode(cv_img, cv2.IMREAD_COLOR)
+# if file.status_code == 200:
+#     with open(file_name, 'wb') as out_file:
+#         shutil.copyfileobj(file.raw, out_file)
 
 
 def visualize_colors(cluster, centroids):
@@ -54,7 +60,7 @@ def check_image_has_border(im):
     return bbox != (0, 0, im.size[0], im.size[1])
 
 
-image = cv2.imread(file_name)
+image = cv2.imdecode(cv_img, cv2.IMREAD_COLOR)
 height, width, _ = image.shape
 image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 reshape = image.reshape((image.shape[0] * image.shape[1], 3))
@@ -64,7 +70,9 @@ visualize = visualize_colors(_cluster, _cluster.cluster_centers_)
 img = Image.open(file_name)
 _format = img.format
 quality = br.score(img)
-volume = os.stat(file_name).st_size
+# volume = os.stat(file_name).st_size
+# volume = len(img.fp.read())
+volume = meta.get(name="Content-Length")
 check_border = check_image_has_border(img)
 print({
     'Colors': visualize,
