@@ -17,4 +17,4 @@ This script get url of an image and download it and then returns the below infor
 
 Requirements Libraries:
 
-pillow, opencv-python, numpy, scikit-learn, requests, image-quality, shutil, os, urllib, io
+pillow, opencv-python, numpy, scikit-learn, requests, image-quality, os, urllib, io
