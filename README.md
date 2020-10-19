@@ -1,4 +1,4 @@
-This script get url of an image and download it and then returns the below informations about that image
+This script get url of an image and returns the below informations about that image :
 
 
 1- Five dominant color with their percentages.
